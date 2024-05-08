@@ -14,6 +14,7 @@ const TimeInputItems = ({ title, onClick }) => {
 };
 
 const CustomRangePicker = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState([]);
   const [isChooseStartTime, setIsChooseStartTime] = useState(true);
   const [startTime, setStartTime] = useState('00:00');
@@ -63,8 +64,8 @@ const CustomRangePicker = () => {
     <>
       <ConfigProvider locale={locale}>
         <RangePicker
-          open={true}
-          // placeholder={['Bat dau', 'End']}
+          onClick={() => setIsOpen(true)}
+          open={isOpen}
           value={value}
           format='YYYY-MM-DD'
           renderExtraFooter={() => (
@@ -103,16 +104,23 @@ const CustomRangePicker = () => {
                   </div>
                 </div>
               </div>
-              <div className='flex justify-end px-8 py-4 gap-9'>
-                <button className='text-[#2196F3]'>Close</button>
-                <button className='text-[#2196F3]'>OK</button>
+              <div className='flex justify-end px-8 py-4 gap-6'>
+                <button className='text-[#2196F3]'>キャンセル</button>
+                <button
+                  className='text-[#2196F3]'
+                  onClick={() => setIsOpen(false)}
+                >
+                  OK
+                </button>
               </div>
             </div>
           )}
           onChange={(value) => {
             setValue(value);
           }}
-          onOk={() => {}}
+          onOk={() => {
+            setIsOpen(false);
+          }}
         />
       </ConfigProvider>
     </>
