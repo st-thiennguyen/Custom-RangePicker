@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { DatePicker, ConfigProvider, Dropdown } from 'antd';
+import DatePicker from 'antd/es/date-picker';
+import ConfigProvider from 'antd/es/config-provider';
+import Dropdown from 'antd/es/dropdown';
 import locale from 'antd/lib/locale/ja_JP';
 // import moment from 'moment';
 import dayjs from 'dayjs';
@@ -19,6 +21,11 @@ const CustomRangePicker = () => {
   const [isChooseStartTime, setIsChooseStartTime] = useState(true);
   const [startTime, setStartTime] = useState('00:00');
   const [endTime, setEndTime] = useState('00:00');
+
+  const disabledDate = (current) => {
+    // Can not select days before today and today
+    return current && current >= dayjs().endOf('day');
+  };
 
   const items = [
     {
@@ -68,6 +75,7 @@ const CustomRangePicker = () => {
           open={isOpen}
           value={value}
           format='YYYY-MM-DD'
+          disabledDate={disabledDate}
           renderExtraFooter={() => (
             <div className='flex flex-col'>
               <div className='flex justify-between items-center gap-9'>
